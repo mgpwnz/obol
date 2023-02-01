@@ -85,7 +85,7 @@ echo export ADDRESS=${ADDRESS} >> $HOME/.bash_profile
 source $HOME/.bash_profile
 sleep 1
 cd $HOME/charon-distributed-validator-cluster/ && \
-docker run --rm -v "$(pwd):/opt/charon" obolnetwork/charon:v0.13.0 create cluster --withdrawal-address="${ADDRESS}dead" --nodes 6 --threshold 5
+docker run --rm -v "$(pwd):/opt/charon" obolnetwork/charon:v0.13.0 create cluster --withdrawal-address=${ADDRESS} --nodes 6 --threshold 5
 
 break
 ;;   
