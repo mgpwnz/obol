@@ -19,9 +19,7 @@ echo "============================================================"
 
 # set vars
 sudo apt-get update && sudo apt-get upgrade -y
-
 sudo apt install make clang pkg-config libssl-dev libclang-dev build-essential git curl ntp jq llvm tmux htop screen unzip -y
-apt install docker-compose
 install() {
 	cd
 	if ! docker --version; then
@@ -46,18 +44,6 @@ install() {
 		. $HOME/.bash_profile
 	fi
 }
-uninstall() {
-	echo -e "${C_LGn}Docker uninstalling...${RES}"
-	sudo systemctl stop docker.service docker.socket
-	sudo systemctl disable docker.service docker.socket
-	sudo rm -rf `systemctl cat docker.service | grep -oPm1 "(?<=^#)([^%]+)"` `systemctl cat docker.socket | grep -oPm1 "(?<=^#)([^%]+)"` /usr/bin/docker-compose
-	sudo apt purge docker-engine docker docker.io docker-ce docker-ce-cli -y
-	sudo apt autoremove --purge docker-engine docker docker.io docker-ce -y
-	sudo apt autoclean
-	sudo rm -rf /var/lib/docker /etc/appasudo rmor.d/docker
-	sudo groupdel docker
-	sudo rm -rf /etc/docker /usr/bin/docker /usr/libexec/docker /usr/libexec/docker/cli-plugins/docker-buildx /usr/libexec/docker/cli-plugins/docker-scan /usr/libexec/docker/cli-plugins/docker-app /usr/share/keyrings/docker-archive-keyring.gpg
-}
 
 # Actions
 $function
@@ -71,23 +57,25 @@ cd charon-distributed-validator-cluster/
 
 # Copy the sample environment variables
 cp .env.sample .env
-sudo chmod -R 666 .charon
+sudo chmod 666 -R /root/charon-distributed-validator-cluster/.charon
 break
 ;;
 
 
 "Create the artifacts")     
 echo "============================================================"
-echo "Enter your wallet address"
+echo "Enter your wallet address 0x000000000000000000000000000000000000 "
 echo "============================================================"
 read ADDRESS
 echo export ADDRESS=${ADDRESS} >> $HOME/.bash_profile
+echo ${ADDRESS}
 echo "============================================================"
 echo "Enter your cluster name"
 echo "============================================================"
 read NAME
 echo export NAME=${NAME} >> $HOME/.bash_profile
 source $HOME/.bash_profile
+echo ${NAME}
 sleep 1
 cd $HOME/charon-distributed-validator-cluster/ && \
 docker run --rm -v "$(pwd):/opt/charon" obolnetwork/charon:v0.13.0 create cluster --withdrawal-address=${ADDRESS} --nodes 6 --threshold 5 --name=${NAME}
