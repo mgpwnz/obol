@@ -61,7 +61,7 @@ break
 
 
 "Create the artifacts")     
-sudo chmod 666 -R /root/charon-distributed-validator-cluster/.charon
+#sudo chmod 666 -R /root/charon-distributed-validator-cluster/.charon
 echo "============================================================"
 echo "Enter your wallet address 0x000000000000000000000000000000000000 "
 echo "============================================================"
@@ -77,7 +77,7 @@ source $HOME/.bash_profile
 
 sleep 1
 cd $HOME/charon-distributed-validator-cluster/ && \
-docker run --rm -v "$(pwd):/opt/charon" obolnetwork/charon:v0.13.0 create cluster --withdrawal-address=${ADDRESS} --nodes 6 --threshold 5 --name=${NAME}
+sudo docker run --rm -v "$(pwd):/opt/charon" obolnetwork/charon:v0.13.0 create cluster --withdrawal-address=${ADDRESS} --nodes 6 --threshold 5 --name=${NAME}
 
 break
 ;;   
@@ -85,13 +85,7 @@ break
 "Run docker")
 
 cd $HOME/charon-distributed-validator-cluster/ && \
-docker-compose up --build
-
-sleep 2
-
-echo -e 'To check logs: \e[1m\e[32mcd $HOME/bundlr/validator-rust && \
-docker-compose logs -f --tail 100'
-echo -e 'Close logs Control+C and continiue install'
+docker-compose up -d
 
 break
 ;;
