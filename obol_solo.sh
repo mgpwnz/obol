@@ -7,7 +7,7 @@ do
 # Menu
 
 PS3='Select an action: '
-options=("Install Node" "Create the artifacts" Run docker" "Check log" "Exit")
+options=("Install Node" "Create the artifacts" "Run docker" "Check log" "Exit")
 select opt in "${options[@]}"
                do
                    case $opt in                           
