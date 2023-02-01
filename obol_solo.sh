@@ -71,7 +71,7 @@ cd charon-distributed-validator-cluster/
 
 # Copy the sample environment variables
 cp .env.sample .env
-
+sudo chmod -R 666 .charon
 break
 ;;
 
