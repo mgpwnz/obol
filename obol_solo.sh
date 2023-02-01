@@ -20,7 +20,7 @@ echo "============================================================"
 # set vars
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt install make clang pkg-config libssl-dev libclang-dev build-essential git curl ntp jq llvm tmux htop screen unzip -y
-apt install docker-compose
+apt install docker-compose -y
 install() {
 	cd
 	if ! docker --version; then
