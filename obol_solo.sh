@@ -21,15 +21,37 @@ echo "============================================================"
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt install make clang pkg-config libssl-dev libclang-dev build-essential git curl ntp jq llvm tmux htop screen unzip -y
 install() {
-	sudo -i
-	cd $HOME
-	apt update && apt install curl -y && apt purge docker docker-engine docker.io containerd docker-compose -y && \
-	rm /usr/bin/docker-compose /usr/local/bin/docker-compose && \
-	curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh && \
-	systemctl restart docker && \
-	curl -SL https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose && \
-	chmod +x /usr/local/bin/docker-compose && \
-	ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+	touch $HOME/.bash_profile
+	cd
+	if ! docker --version; then
+		echo -e "${C_LGn}Docker installation...${RES}"
+		sudo apt update
+		sudo apt upgrade -y
+		sudo apt install curl apt-transport-https ca-certificates gnupg lsb-release -y
+		. /etc/*-release
+		wget -qO- "https://download.docker.com/linux/${DISTRIB_ID,,}/gpg" | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+		echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+		sudo apt update
+		sudo apt install docker-ce docker-ce-cli containerd.io -y
+		docker_version=`apt-cache madison docker-ce | grep -oPm1 "(?<=docker-ce \| )([^_]+)(?= \| https)"`
+		sudo apt install docker-ce="$docker_version" docker-ce-cli="$docker_version" containerd.io -y
+	fi
+	if ! docker-compose --version; then
+		echo -e "${C_LGn}Docker Сompose installation...${RES}"
+		sudo apt update
+		sudo apt upgrade -y
+		sudo apt install wget jq -y
+		local docker_compose_version=`wget -qO- https://api.github.com/repos/docker/compose/releases/latest | jq -r ".tag_name"`
+		sudo wget -O /usr/bin/docker-compose "https://github.com/docker/compose/releases/download/${docker_compose_version}/docker-compose-`uname -s`-`uname -m`"
+		sudo chmod +x /usr/bin/docker-compose
+		. $HOME/.bash_profile
+	fi
+	if [ "$dive" = "true" ] && ! dpkg -s dive | grep -q "ok installed"; then
+		echo -e "${C_LGn}Dive installation...${RES}"
+		wget https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.deb
+		sudo apt install ./dive_0.9.2_linux_amd64.deb
+		rm -rf dive_0.9.2_linux_amd64.deb
+	fi
 }
 
 # Actions
