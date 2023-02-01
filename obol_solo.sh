@@ -55,12 +55,13 @@ cd charon-distributed-validator-cluster/
 
 # Copy the sample environment variables
 cp .env.sample .env
-sudo chmod 666 -R /root/charon-distributed-validator-cluster/.charon
+
 break
 ;;
 
 
 "Create the artifacts")     
+sudo chmod 666 -R /root/charon-distributed-validator-cluster/.charon
 echo "============================================================"
 echo "Enter your wallet address 0x000000000000000000000000000000000000 "
 echo "============================================================"
