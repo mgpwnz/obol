@@ -107,7 +107,7 @@ break
 
 cd $HOME/charon-distributed-validator-cluster/ && \
 docker-compose logs -f --tail 100
-
+;;
 "Exit")
 exit
 ;;
