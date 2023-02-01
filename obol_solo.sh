@@ -98,7 +98,7 @@ docker-compose up --build
 sleep 2
 
 echo -e 'To check logs: \e[1m\e[32mcd $HOME/bundlr/validator-rust && \
-docker-compose logs -f --tail 100
+docker-compose logs -f --tail 100'
 echo -e 'Close logs Control+C and continiue install'
 
 break
