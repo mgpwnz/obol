@@ -19,16 +19,16 @@ echo "============================================================"
 
 # set vars
 sudo apt-get update && sudo apt-get upgrade -y
-sudo apt install make clang pkg-config libssl-dev libclang-dev build-essential git curl ntp jq llvm tmux htop screen unzip -y
-#Install docker compose
-function="install"
+
+sudo apt-get install curl wget jq libpq-dev libssl-dev \
+build-essential pkg-config openssl ocl-icd-opencl-dev \
+libopencl-clang-dev libgomp1 -y
+apt install docker-compose
 install() {
-	touch $HOME/.bash_profile
 	cd
 	if ! docker --version; then
 		echo -e "${C_LGn}Docker installation...${RES}"
-		sudo apt update
-		sudo apt upgrade -y
+		sudo apt update && sudo apt upgrade -y
 		sudo apt install curl apt-transport-https ca-certificates gnupg lsb-release -y
 		. /etc/*-release
 		wget -qO- "https://download.docker.com/linux/${DISTRIB_ID,,}/gpg" | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -40,16 +40,36 @@ install() {
 	fi
 	if ! docker-compose --version; then
 		echo -e "${C_LGn}Docker Сompose installation...${RES}"
-		sudo apt update
-		sudo apt upgrade -y
+		sudo apt update && sudo apt upgrade -y
 		sudo apt install wget jq -y
 		local docker_compose_version=`wget -qO- https://api.github.com/repos/docker/compose/releases/latest | jq -r ".tag_name"`
 		sudo wget -O /usr/bin/docker-compose "https://github.com/docker/compose/releases/download/${docker_compose_version}/docker-compose-`uname -s`-`uname -m`"
 		sudo chmod +x /usr/bin/docker-compose
 		. $HOME/.bash_profile
 	fi
+	if [ "$dive" = "true" ] && ! dpkg -s dive | grep -q "ok installed"; then
+		echo -e "${C_LGn}Dive installation...${RES}"
+		wget https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.deb
+		sudo apt install ./dive_0.9.2_linux_amd64.deb
+		rm -rf dive_0.9.2_linux_amd64.deb
+	fi
 }
+uninstall() {
+	echo -e "${C_LGn}Docker uninstalling...${RES}"
+	sudo dpkg -r dive
+	sudo systemctl stop docker.service docker.socket
+	sudo systemctl disable docker.service docker.socket
+	sudo rm -rf `systemctl cat docker.service | grep -oPm1 "(?<=^#)([^%]+)"` `systemctl cat docker.socket | grep -oPm1 "(?<=^#)([^%]+)"` /usr/bin/docker-compose
+	sudo apt purge docker-engine docker docker.io docker-ce docker-ce-cli -y
+	sudo apt autoremove --purge docker-engine docker docker.io docker-ce -y
+	sudo apt autoclean
+	sudo rm -rf /var/lib/docker /etc/appasudo rmor.d/docker
+	sudo groupdel docker
+	sudo rm -rf /etc/docker /usr/bin/docker /usr/libexec/docker /usr/libexec/docker/cli-plugins/docker-buildx /usr/libexec/docker/cli-plugins/docker-scan /usr/libexec/docker/cli-plugins/docker-app /usr/share/keyrings/docker-archive-keyring.gpg
+}
+
 # Actions
+$function
 echo -e "${C_LGn}Done!${RES}"
 break
 ;;
