@@ -21,6 +21,7 @@ echo "============================================================"
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt install make clang pkg-config libssl-dev libclang-dev build-essential git curl ntp jq llvm tmux htop screen unzip -y
 #Install docker compose
+function="install"
 install() {
 	touch $HOME/.bash_profile
 	cd
