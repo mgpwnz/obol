@@ -28,7 +28,7 @@ sleep 1
 rm /usr/bin/docker-compose /usr/local/bin/docker-compose
 sleep 1
 curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
-sleep 1
+sleep 20
 curl -SL https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
 sleep 1
 chmod +x /usr/local/bin/docker-compose
