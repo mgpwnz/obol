@@ -20,9 +20,8 @@ echo "============================================================"
 # set vars
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt install make clang pkg-config libssl-dev libclang-dev build-essential git curl ntp jq llvm tmux htop screen unzip -y
-
-install() {
-	touch $HOME/.bash_profile
+#Install docker compose
+touch $HOME/.bash_profile
 	cd
 	if ! docker --version; then
 		echo -e "${C_LGn}Docker installation...${RES}"
@@ -47,7 +46,6 @@ install() {
 		sudo chmod +x /usr/bin/docker-compose
 		. $HOME/.bash_profile
 	fi
-}
 # Actions
 $function
 echo -e "${C_LGn}Done!${RES}"
