@@ -23,36 +23,16 @@ sudo apt-get update && sudo apt-get upgrade -y
 sudo apt-get install curl wget jq libpq-dev libssl-dev \
 build-essential pkg-config openssl ocl-icd-opencl-dev \
 libopencl-clang-dev libgomp1 -y
-
-
-echo "Starting docker community edition install..."
-echo "Removing any old instances of docker and installing dependencies"
 apt update && apt purge docker docker-engine docker.io containerd docker-compose -y
+sleep 1
 rm /usr/bin/docker-compose /usr/local/bin/docker-compose
-
-echo "Dowloading"
-curl -fsSL https://get.docker.com -o get-docker.sh
-
-echo "Pulling the latest repository"
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-
-apt update
-
-echo "Installing docker community edition"
-apt install -y docker-ce docker-ce-cli containerd.io
-
-echo "Docker install completed, installing docker-compose"
-
-echo "Dowloading docker-compose v2.5.0 - be sure to update to the latest stable"
-curl -L "https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-echo "Setting binary permissions"
+sleep 1
+curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
+sleep 1
+curl -SL https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+sleep 1
 chmod +x /usr/local/bin/docker-compose
-
-echo “Docker and docker-compose install complete”
-
-# Run docker as non-root user on Ubuntu
-sudo usermod -aG docker $USER
+ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 # Actions
 $function
