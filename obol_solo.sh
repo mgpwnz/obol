@@ -50,6 +50,7 @@ install() {
 }
 # Actions
 echo -e "${C_LGn}Done!${RES}"
+break
 ;;
 
 "Download the components")
