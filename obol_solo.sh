@@ -23,50 +23,35 @@ sudo apt-get update && sudo apt-get upgrade -y
 sudo apt-get install curl wget jq libpq-dev libssl-dev \
 build-essential pkg-config openssl ocl-icd-opencl-dev \
 libopencl-clang-dev libgomp1 -y
-apt install docker-compose
-install() {
-	cd
-	if ! docker --version; then
-		echo -e "${C_LGn}Docker installation...${RES}"
-		sudo apt update && sudo apt upgrade -y
-		sudo apt install curl apt-transport-https ca-certificates gnupg lsb-release -y
-		. /etc/*-release
-		wget -qO- "https://download.docker.com/linux/${DISTRIB_ID,,}/gpg" | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-		echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-		sudo apt update
-		sudo apt install docker-ce docker-ce-cli containerd.io -y
-		docker_version=`apt-cache madison docker-ce | grep -oPm1 "(?<=docker-ce \| )([^_]+)(?= \| https)"`
-		sudo apt install docker-ce="$docker_version" docker-ce-cli="$docker_version" containerd.io -y
-	fi
-	if ! docker-compose --version; then
-		echo -e "${C_LGn}Docker Сompose installation...${RES}"
-		sudo apt update && sudo apt upgrade -y
-		sudo apt install wget jq -y
-		local docker_compose_version=`wget -qO- https://api.github.com/repos/docker/compose/releases/latest | jq -r ".tag_name"`
-		sudo wget -O /usr/bin/docker-compose "https://github.com/docker/compose/releases/download/${docker_compose_version}/docker-compose-`uname -s`-`uname -m`"
-		sudo chmod +x /usr/bin/docker-compose
-		. $HOME/.bash_profile
-	fi
-	if [ "$dive" = "true" ] && ! dpkg -s dive | grep -q "ok installed"; then
-		echo -e "${C_LGn}Dive installation...${RES}"
-		wget https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.deb
-		sudo apt install ./dive_0.9.2_linux_amd64.deb
-		rm -rf dive_0.9.2_linux_amd64.deb
-	fi
-}
-uninstall() {
-	echo -e "${C_LGn}Docker uninstalling...${RES}"
-	sudo dpkg -r dive
-	sudo systemctl stop docker.service docker.socket
-	sudo systemctl disable docker.service docker.socket
-	sudo rm -rf `systemctl cat docker.service | grep -oPm1 "(?<=^#)([^%]+)"` `systemctl cat docker.socket | grep -oPm1 "(?<=^#)([^%]+)"` /usr/bin/docker-compose
-	sudo apt purge docker-engine docker docker.io docker-ce docker-ce-cli -y
-	sudo apt autoremove --purge docker-engine docker docker.io docker-ce -y
-	sudo apt autoclean
-	sudo rm -rf /var/lib/docker /etc/appasudo rmor.d/docker
-	sudo groupdel docker
-	sudo rm -rf /etc/docker /usr/bin/docker /usr/libexec/docker /usr/libexec/docker/cli-plugins/docker-buildx /usr/libexec/docker/cli-plugins/docker-scan /usr/libexec/docker/cli-plugins/docker-app /usr/share/keyrings/docker-archive-keyring.gpg
-}
+echo "Starting docker community edition install..."
+echo "Removing any old instances of docker and installing dependencies"
+apt remove -y docker docker-engine docker.io containerd runc
+apt update
+apt install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+echo "Dowloading latest docker and adding official GPG key"
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+
+echo "Pulling the latest repository"
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+apt update
+
+echo "Installing docker community edition"
+apt install -y docker-ce docker-ce-cli containerd.io
+
+echo "Docker install completed, installing docker-compose"
+
+echo "Dowloading docker-compose v2.5.0 - be sure to update to the latest stable"
+curl -L "https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+echo "Setting binary permissions"
+chmod +x /usr/local/bin/docker-compose
+
+echo “Docker and docker-compose install complete”
+
+# Run docker as non-root user on Ubuntu
+sudo usermod -aG docker $USER
 
 # Actions
 $function
@@ -106,7 +91,7 @@ source $HOME/.bash_profile
 
 sleep 1
 cd $HOME/charon-distributed-validator-cluster/ && \
-sudo docker run --rm -v "$(pwd):/opt/charon" obolnetwork/charon:v0.13.0 create cluster --withdrawal-address=${ADDRESS} --nodes 6 --threshold 5 --name=${NAME}
+sudo docker run --rm -v "$(pwd):/opt/charon" obolnetwork/charon:v0.13.0 create cluster --withdrawal-address=${ADDRESS} --nodes 6 --threshold 5 --name=${NAME} --split-existing-keys=true
 
 break
 ;;   
