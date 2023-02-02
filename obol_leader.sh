@@ -125,12 +125,13 @@ break
 ;;
 
 "Download the components")
-screen -S obol
 # Clone repository
 git clone https://github.com/ObolNetwork/charon-distributed-validator-node.git
 
 # Change directory
-cd charon-distributed-validator-node && \
+cd charon-distributed-validator-node 
+mkdir .charon
+chmod o+w .charon
 docker run --rm -v "$(pwd):/opt/charon" obolnetwork/charon:v0.13.0 create enr
 
 break
