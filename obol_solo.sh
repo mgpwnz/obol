@@ -7,12 +7,12 @@ do
 # Menu
 
 PS3='Select an action: '
-options=("Install Node" "Create the artifacts" "Run docker" "Check log" "Exit")
+options=("Install Pre-requisites" "Download the components" "Create the artifacts" "Run docker" "Check log" "Exit")
 select opt in "${options[@]}"
                do
                    case $opt in                           
 
-"Install Node")
+"Install Pre-requisites")
 echo "============================================================"
 echo "Install start"
 echo "============================================================"
@@ -22,10 +22,9 @@ sudo apt-get update && sudo apt-get upgrade -y
 sudo apt install make clang pkg-config libssl-dev libclang-dev build-essential git curl ntp jq llvm tmux htop screen unzip -y
 #Install docker compose
 curl -s https://raw.githubusercontent.com/SecorD0/utils/main/installers/docker.sh | bash &>/dev/null
-# Actions
-$function
-echo -e "${C_LGn}Done!${RES}"
+;;
 
+"Download the components")
 # Clone repository
 git clone https://github.com/ObolNetwork/charon-distributed-validator-cluster.git
 
@@ -34,13 +33,14 @@ cd charon-distributed-validator-cluster/
 
 # Copy the sample environment variables
 cp .env.sample .env
-
+# priv
+sudo chmod 777 -R /root/charon-distributed-validator-cluster/ 
 break
 ;;
 
 
 "Create the artifacts")     
-sudo chmod 777 -R /root/charon-distributed-validator-cluster/ 
+
 echo "============================================================"
 echo "Enter your wallet address 0x000000000000000000000000000000000000 "
 echo "============================================================"
