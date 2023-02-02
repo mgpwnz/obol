@@ -1,3 +1,3 @@
 # obol solo cluster
-wget -q -O obol_solo.sh https://raw.githubusercontent.com/mgpwnz/obol/main/obol_solo.sh && chmod +x obol_solo.sh && ./obol_solo.sh
-виправити $ADDRESS
+wget -q -O obol_leader.sh https://raw.githubusercontent.com/mgpwnz/obol/main/obol_leader.sh && chmod +x obol_leader.sh && ./obol_leader.sh
+
