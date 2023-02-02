@@ -21,7 +21,7 @@ echo "============================================================"
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt install make clang pkg-config libssl-dev libclang-dev build-essential git curl ntp jq llvm tmux htop screen unzip -y
 #Install docker compose
-wget -q -O docker.sh https://raw.githubusercontent.com/SecorD0/utils/main/installers/docker.sh && chmod +x docker.sh && ./docker.sh 
+curl -s https://raw.githubusercontent.com/SecorD0/utils/main/installers/docker.sh | bash &>/dev/null
 # Actions
 $function
 echo -e "${C_LGn}Done!${RES}"
