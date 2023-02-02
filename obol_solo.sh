@@ -23,14 +23,15 @@ sudo apt-get update && sudo apt-get upgrade -y
 sudo apt-get install curl wget jq libpq-dev libssl-dev \
 build-essential pkg-config openssl ocl-icd-opencl-dev \
 libopencl-clang-dev libgomp1 -y
+
+
 echo "Starting docker community edition install..."
 echo "Removing any old instances of docker and installing dependencies"
-apt remove -y docker docker-engine docker.io containerd runc
-apt update
-apt install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+apt update && apt purge docker docker-engine docker.io containerd docker-compose -y
+rm /usr/bin/docker-compose /usr/local/bin/docker-compose
 
-echo "Dowloading latest docker and adding official GPG key"
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+echo "Dowloading"
+curl -fsSL https://get.docker.com -o get-docker.sh
 
 echo "Pulling the latest repository"
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -69,7 +70,8 @@ cd charon-distributed-validator-cluster/
 # Copy the sample environment variables
 cp .env.sample .env
 # priv
-sudo chmod 777 -R /root/charon-distributed-validator-cluster/ 
+mkdir .charon
+sudo chmod -R 666 .charon
 break
 ;;
 
