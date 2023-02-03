@@ -146,7 +146,7 @@ break
 ;;
 "Enter link")
 # Change directory
-cd charon-distributed-validator-node 
+cd $HOME/charon-distributed-validator-node && \
 chmod o+w .charon
 exit
 ;;
