@@ -148,7 +148,6 @@ break
 # Change directory
 cd charon-distributed-validator-node 
 chmod o+w .charon
-read -p "Enter link: "
 ;;
 "Run docker")
 rm -r ./data/lighthouse
