@@ -129,13 +129,12 @@ break
 git clone https://github.com/ObolNetwork/charon-distributed-validator-node.git
 #Change ports
 cd charon-distributed-validator-node
+chmod o+w .charon
 cp .env.sample .env
 sed -i -e "s%#MONITORING_PORT_GRAFANA=%MONITORING_PORT_GRAFANA=3008%g" $HOME/charon-distributed-validator-node/.env
 sed -i -e "s%#LIGHTHOUSE_PORT_P2P=%LIGHTHOUSE_PORT_P2P=9100%g" $HOME/charon-distributed-validator-node/.env
 sed -i -e "s%#GETH_PORT_P2P=%GETH_PORT_P2P=32303%g" $HOME/charon-distributed-validator-node/.env
 # Change directory 
-mkdir .charon 
-chmod o+w
 sleep 2
 docker run --rm -v "$(pwd):/opt/charon" obolnetwork/charon:v0.13.0 create enr
 sleep 2
