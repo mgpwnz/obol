@@ -146,8 +146,7 @@ break
 ;;
 "Enter link")
 # Change directory
-cd $HOME/charon-distributed-validator-node && \
-chmod o+w .charon
+chmod o+w $HOME/charon-distributed-validator-node/.charon
 exit
 ;;
 "Run docker")
