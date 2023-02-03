@@ -126,9 +126,9 @@ break
 
 "Download the components")
 # Clone repository
-git clone https://github.com/ObolNetwork/charon-distributed-validator-node.git
+git clone https://github.com/ObolNetwork/charon-distributed-validator-node.git && \
 #Change ports
-cd charon-distributed-validator-node
+cd charon-distributed-validator-node && \
 chmod o+w .charon
 cp .env.sample .env
 sed -i -e "s%#MONITORING_PORT_GRAFANA=%MONITORING_PORT_GRAFANA=3008%g" $HOME/charon-distributed-validator-node/.env
@@ -145,7 +145,7 @@ break
 ;;
 "Enter link")
 # Change directory
-cd $HOME/charon-distributed-validator-node 
+cd $HOME/charon-distributed-validator-node && \
 chmod o+w .charon
 exit
 ;;
