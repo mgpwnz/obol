@@ -135,7 +135,7 @@ sed -i -e "s%#LIGHTHOUSE_PORT_P2P=%LIGHTHOUSE_PORT_P2P=9100%g" $HOME/charon-dist
 sed -i -e "s%#GETH_PORT_P2P=%GETH_PORT_P2P=32303%g" $HOME/charon-distributed-validator-node/.env
 # Change directory
 cd charon-distributed-validator-node 
-chmod o+w .charon
+chmod o+w $HOME/charon-distributed-validator-node/.charon
 docker run --rm -v "$(pwd):/opt/charon" obolnetwork/charon:v0.13.0 create enr
 sleep 2
 #backup
