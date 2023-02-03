@@ -149,6 +149,7 @@ break
 cd $HOME/charon-distributed-validator-node
 chmod o+w .charon
 exit
+cd $HOME/charon-distributed-validator-node
 ;;
 "Run docker")
 rm -r ./data/lighthouse
