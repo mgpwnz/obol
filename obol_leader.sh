@@ -128,7 +128,7 @@ break
 # Clone repository
 git clone https://github.com/ObolNetwork/charon-distributed-validator-node.git && \
 cd charon-distributed-validator-node && \
-chmod o+w .charon
+sudo chmod o+w .charon
 # Change ports
 cp .env.sample .env
 sed -i -e "s%#MONITORING_PORT_GRAFANA=%MONITORING_PORT_GRAFANA=3008%g" $HOME/charon-distributed-validator-node/.env
