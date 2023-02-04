@@ -148,7 +148,7 @@ exit
 "backup keys")
 # Change directory
 mkdir $HOME/backup_Obol/validator_keys
-cp -r $HOME/charon-distributed-validator-node/.charon/validator_keys $HOME/backup_Obol/validator_keys
+cp -r $HOME/charon-distributed-validator-node/.charon/ $HOME/backup_Obol/
 ;;
 "Run docker")
 rm -r ./data/lighthouse
