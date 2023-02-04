@@ -7,7 +7,7 @@ do
 # Menu
 
 PS3='Select an action: '
-options=("Install Pre-requisites" "Download the components" "Enter link" "Run docker" "Check log" "Exit")
+options=("Install Pre-requisites" "Download the components" "backup keys" "Run docker" "Check log" "Exit")
 select opt in "${options[@]}"
                do
                    case $opt in                           
@@ -143,12 +143,12 @@ sleep 2
 mkdir $HOME/backup_Obol/
 cp $HOME/charon-distributed-validator-node/.charon/charon-enr-private-key $HOME/backup_Obol/
 break
-;;
-"Enter link")
-# Change directory
-cd $HOME/charon-distributed-validator-node
-chmod o+w .charon
 exit
+;;
+"backup keys")
+# Change directory
+mkdir $HOME/backup_Obol/validator_keys
+cp -r $HOME/charon-distributed-validator-node/.charon/validator_keys $HOME/backup_Obol/validator_keys
 ;;
 "Run docker")
 rm -r ./data/lighthouse
