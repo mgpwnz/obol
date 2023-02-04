@@ -158,6 +158,7 @@ break
 ;;
 "Check log")
 cd $HOME/charon-distributed-validator-node && docker-compose logs -f
+exit
 ;;
 "Exit")
 exit
