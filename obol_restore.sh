@@ -127,6 +127,7 @@ break
 "Download the components")
 # Clone repository
 git clone https://github.com/ObolNetwork/charon-distributed-validator-node.git
+sleep 5
 cd charon-distributed-validator-node
 # Change ports
 cp .env.sample .env
