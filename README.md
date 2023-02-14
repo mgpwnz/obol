@@ -12,3 +12,27 @@ wget -q -O obol_leader.sh https://raw.githubusercontent.com/mgpwnz/obol/main/obo
 Відновлення з копії або перенос на інший сервер!
 Для початку завантажити backup_obol
 wget -q -O obol_restore.sh https://raw.githubusercontent.com/mgpwnz/obol/main/obol_restore.sh && chmod +x obol_restore.sh && ./obol_restore.sh
+
+
+
+
+
+
+
+
+У кого не стартует в обол после запуска или переезда синхронизация - выполняем команду:
+
+docker-compose -f $HOME/charon-distributed-validator-node/docker-compose.yml down
+
+sed -i -e 's%--checkpoint-sync-url=.*%--checkpoint-sync-url=https://goerli.beaconstate.info%g' "$HOME/charon-distributed-validator-node/docker-compose.yml"
+
+docker-compose -f $HOME/charon-distributed-validator-node/docker-compose.yml up -d
+
+
+
+
+
+
+
+
+
