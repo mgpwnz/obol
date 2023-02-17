@@ -30,7 +30,7 @@ docker-compose -f $HOME/charon-distributed-validator-node/docker-compose.yml up 
 
 
 
-
+wget -q -O obol_ports.sh https://raw.githubusercontent.com/mgpwnz/obol/main/obol_ports.sh && chmod +x obol_ports.sh && ./obol_ports.sh
 
 
 
