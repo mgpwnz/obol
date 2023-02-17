@@ -27,12 +27,12 @@ docker-compose -f $HOME/charon-distributed-validator-node/docker-compose.yml dow
 sed -i -e 's%--checkpoint-sync-url=.*%--checkpoint-sync-url=https://goerli.beaconstate.info%g' "$HOME/charon-distributed-validator-node/docker-compose.yml"
 
 docker-compose -f $HOME/charon-distributed-validator-node/docker-compose.yml up -d
+#Встановити по замовчуванню !!
+sed -i -e 's%--checkpoint-sync-url=https://goerli.beaconstate.info%--checkpoint-sync-url=https://goerli.checkpoint-sync.ethdevops.io%g' "$HOME/charon-distributed-validator-node/docker-compose.yml"
 
-
-
+Зміна портів
 wget -q -O obol_ports.sh https://raw.githubusercontent.com/mgpwnz/obol/main/obol_ports.sh && chmod +x obol_ports.sh && ./obol_ports.sh
 
 
-sed -i -e 's%--checkpoint-sync-url=https://goerli.beaconstate.info%--checkpoint-sync-url=https://goerli.checkpoint-sync.ethdevops.io%g' "$HOME/charon-distributed-validator-node/docker-compose.yml"
 
 
