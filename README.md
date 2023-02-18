@@ -1,5 +1,5 @@
 obol solo cluster
-[wget -q -O obol_leader.sh https://raw.githubusercontent.com/mgpwnz/obol/main/obol_leader.sh && chmod +x obol_leader.sh && ./obol_leader.sh]
+[ wget -q -O obol_leader.sh https://raw.githubusercontent.com/mgpwnz/obol/main/obol_leader.sh && chmod +x obol_leader.sh && ./obol_leader.sh ]
 
 #1 пункт оновлення пакетів та системи + встановлення докер
 #2 клонування репозиторію, зміна стандартних портів, створення ENR, бекап приватного ключа charon в директорію $HOME/backup_Obol/
