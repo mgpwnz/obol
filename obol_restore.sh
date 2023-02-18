@@ -139,6 +139,7 @@ sleep 2
 cp -r  $HOME/backup_Obol/.charon/ $HOME/charon-distributed-validator-node/
 chmod 777 .charon
 sleep 2
+sudo chmod -R 777 teku
 break
 exit
 ;;
