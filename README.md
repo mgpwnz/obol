@@ -20,7 +20,7 @@ wget -q -O obol_restore.sh https://raw.githubusercontent.com/mgpwnz/obol/main/ob
 
 
 
-У кого не стартует в обол после запуска или переезда синхронизация - выполняем команду:
+#У кого не стартует в обол после запуска или переезда синхронизация - выполняем команду:
 
 docker-compose -f $HOME/charon-distributed-validator-node/docker-compose.yml down
 
