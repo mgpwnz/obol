@@ -7,7 +7,7 @@ do
 # Menu
 
 PS3='Select an action: '
-options=("Install Pre-requisites" "Download the components" "backup keys" "Change ports 9000 30303" "Run docker" "Check log" "Exit")
+options=("Install Pre-requisites" "Download the components" "backup keys" "Change standart ports: 9000-9100 30303-32303" "Run docker" "Check log" "Exit")
 select opt in "${options[@]}"
                do
                    case $opt in                           
@@ -147,7 +147,7 @@ cp $HOME/charon-distributed-validator-node/.charon/charon-enr-private-key $HOME/
 break
 exit
 ;;
-"Change ports 9000 30303")
+"Change standart ports: 9000-9100 30303-32303")
 sed -i -e "s%#LIGHTHOUSE_PORT_P2P=%LIGHTHOUSE_PORT_P2P=9100%g" $HOME/charon-distributed-validator-node/.env
 sed -i -e "s%#GETH_PORT_P2P=%GETH_PORT_P2P=32303%g" $HOME/charon-distributed-validator-node/.env
 break
